@@ -5,19 +5,12 @@ body {width: 85%;
 
 div {background-color: aliceblue;
 	padding: 8px;
+	page-break-after: always;
 
 }
 
 img.persona {float: left;
 		padding: 8px;
-
-}
-
-img.conceptualmodel {float: left;
-
-}
-
-img.conceptualmodelstory {float: right;
 
 }
 
