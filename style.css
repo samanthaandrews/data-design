@@ -10,7 +10,8 @@ div {background-color: aliceblue;
 }
 
 img.persona {float: left;
-		padding-right: 15px;
+				padding-right: 15px;
+				padding-top: 15px;
 
 }
 

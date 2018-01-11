@@ -38,18 +38,21 @@
 		<p><em>postcondition:</em> Gloria successfully makes her first post on Medium</p>
 		<ul>
 			<li>Gloria logs in to her Medium account</li>
+			<li>Medium prompts Gloria to write her first story</li>
 			<li>She clicks the <em>write story</em> button</li>
+			<li>Medium loads a blank article page</li>
 			<li>She adds her content (text and photo)</li>
 			<li>She clicks publish</li>
+			<li>Medium takes her to the published article page</li>
 			<li>Her blog is now live</li>
 		</ul>
 		<p>Other users can now comment on the post (at the bottom or in-line), “clap” for the post, tweet it (or tweet specific passages), share on Facebook, bookmark it, and highlight passages (publicly or privately).</p>
 		</div>
 
 		<h2>Visual Data Design</h2>
-		<h2>Conceptual Model</h2>
 
 		<div>
+			<h2>Conceptual Model</h2>
 		<img src="Images/Medium-Profile-Image.png" alt="Medium Profile" width="500" />
 			<img src="Images/Medium-Story-Image.png" alt="Medium Story" width="500" />
 		</div>
@@ -70,7 +73,7 @@
 					<li>storyId (primary key)</li>
 					<li>storyProfileId (foreign key)</li>
 					<li>storyContent</li>
-					<li>storyDate</li>
+					<li>storyDateTime</li>
 				</ul>
 			<h4>Clap (Try Hard)</h4>
 			<ul>
@@ -78,24 +81,17 @@
 				<li>clapProfileId (foreign key)</li>
 				<li>clapStoryId (foreign key)</li>
 			</ul>
-			<h4>Paragraph (Strong)</h4>
-			<ul>
-				<li>paragraphId (primary key)</li>
-				<li>paragraphStoryId (foreign key)</li>
-				<li>paragraphType</li>
-			</ul>
 			<h4>Highlight (Weak)</h4>
 				<ul>
 					<li>highlightProfileId (foreign key)</li>
 					<li>highlightStoryId (foreign key)</li>
-					<li>highlightDate</li>
+					<li>highlightDateTime</li>
 				</ul>
 		<h3>Relations</h3>
 			<ul>
 				<li>One <strong>Profile</strong> can write many <strong>Stories</strong> - <strong><em>(1 to n)</em></strong></li>
-				<li>Many <strong>Stories</strong> can be clapped by many <strong>Profiles</strong> - <strong><em>(m to n)</em></strong></li>
-				<li>One <strong>Profile</strong> can highlight many <strong>Paragraphs</strong> - <strong><em>(1 to n)</em></strong></li>
-				<li>Many <strong>Paragraphs</strong> can be highlighted by many <strong>Profiles</strong> - <strong><em>(m to n)</em></strong></li>
+				<li>Many <strong>Profiles</strong> can clap for many <strong>Stories</strong> - <strong><em>(m to n)</em></strong></li>
+				<li>Many <strong>Profiles</strong> can highlight many <strong>Stories</strong> - <strong><em>(m to n)</em></strong></li>
 			</ul>
 		</div>
 		<h2>ERD</h2>
