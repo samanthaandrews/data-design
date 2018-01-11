@@ -1,3 +1,12 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: sam
+ * Date: 1/11/18
+ * Time: 1:18 PM
+ */
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -41,8 +50,8 @@
 		<h2>Conceptual Model</h2>
 
 		<div>
-		<img class=conceptualmodel src="Images/Medium-Profile-Image.png" alt="Medium Profile" width="500" />
-			<img class=conceptualmodelstory src="Images/Medium-Story-Image.png" alt="Medium Story" width="500" />
+		<img src="Images/Medium-Profile-Image.png" alt="Medium Profile" width="500" />
+			<img src="Images/Medium-Story-Image.png" alt="Medium Story" width="500" />
 		</div>
 
 		<div>
@@ -57,15 +66,15 @@
 					<li>storyId</li>
 					<li>storyContent</li>
 				</ul>
+			<h4>Claps</h4>
+			<ul>
+				<li></li>
+			</ul>
 			<h4>Highlights</h4>
 				<ul>
 					<li></li>
 				</ul>
 			<h4>Comments</h4>
-				<ul>
-					<li></li>
-				</ul>
-			<h4>Claps</h4>
 				<ul>
 					<li></li>
 				</ul>
