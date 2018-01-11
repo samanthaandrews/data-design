@@ -1,13 +1,15 @@
 body {width: 85%;
+		margin: auto;
 
 }
 
 div {background-color: aliceblue;
+	padding: 8px;
 
 }
 
 img {float: left;
-	 padding: 8px;
+		padding: 8px;
 
 }
 
@@ -15,3 +17,26 @@ div.persona {float: right
 
 }
 
+h1 {font-family: "Avenir Next"
+
+}
+
+h2 {font-family: "Avenir Next"
+
+}
+
+h3 {font-family: "Avenir Next"
+
+}
+
+h4 {font-family: "Avenir Next"
+
+}
+
+p {font-family: "Avenir Next"
+
+}
+
+ul {font-family: "Avenir Next"
+
+}
