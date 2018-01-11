@@ -56,33 +56,48 @@
 
 		<div>
 		<h3>Entities and Attributes</h3>
-			<h4>Profile</h4>
+			<h4>Profile (Strong)</h4>
 				<ul>
-					<li>profileId</li>
-					<li>profileAtHandle</li>
+					<li>profileId (primary key)</li>
+					<li>profileActivationToken</li>
+					<li>profileHandle</li>
+					<li>profileEmail</li>
+					<li>profileHash</li>
+					<li>profileSalt</li>
 				</ul>
-			<h4>Story</h4>
+			<h4>Story (Strong)</h4>
 				<ul>
-					<li>storyId</li>
+					<li>storyId (primary key)</li>
+					<li>storyProfileId (foreign key)</li>
 					<li>storyContent</li>
+					<li>storyDate</li>
 				</ul>
-			<h4>Claps</h4>
+			<h4>Clap (Try Hard)</h4>
 			<ul>
-				<li></li>
+				<li>clapId (primary key)</li>
+				<li>clapProfileId (foreign key)</li>
+				<li>clapStoryId (foreign key)</li>
 			</ul>
-			<h4>Highlights</h4>
+			<h4>Paragraph (Strong)</h4>
+			<ul>
+				<li>paragraphId (primary key)</li>
+				<li>paragraphStoryId (foreign key)</li>
+				<li>paragraphType</li>
+			</ul>
+			<h4>Highlight (Weak)</h4>
 				<ul>
-					<li></li>
-				</ul>
-			<h4>Comments</h4>
-				<ul>
-					<li></li>
+					<li>highlightProfileId (foreign key)</li>
+					<li>highlightStoryId (foreign key)</li>
+					<li>highlightDate</li>
 				</ul>
 		<h3>Relations</h3>
 			<ul>
-				<li></li>
-				<li></li>
+				<li>One <strong>Profile</strong> can write many <strong>Stories</strong> - <strong><em>(1 to n)</em></strong></li>
+				<li>Many <strong>Stories</strong> can be clapped by many <strong>Profiles</strong> - <strong><em>(m to n)</em></strong></li>
+				<li>One <strong>Profile</strong> can highlight many <strong>Paragraphs</strong> - <strong><em>(1 to n)</em></strong></li>
+				<li>Many <strong>Paragraphs</strong> can be highlighted by many <strong>Profiles</strong> - <strong><em>(m to n)</em></strong></li>
 			</ul>
 		</div>
+		<h2>ERD</h2>
 	</body>
 </html>

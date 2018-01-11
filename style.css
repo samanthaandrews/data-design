@@ -10,7 +10,7 @@ div {background-color: aliceblue;
 }
 
 img.persona {float: left;
-		padding: 8px;
+		padding-right: 15px;
 
 }
 
@@ -18,7 +18,8 @@ div.persona {float: right
 
 }
 
-h1 {font-family: "Avenir Next"
+h1 {
+	font-family: "Avenir Next"
 
 }
 
