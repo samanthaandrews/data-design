@@ -8,8 +8,16 @@ div {background-color: aliceblue;
 
 }
 
-img {float: left;
+img.persona {float: left;
 		padding: 8px;
+
+}
+
+img.conceptualmodel {float: left;
+
+}
+
+img.conceptualmodelstory {float: right;
 
 }
 
