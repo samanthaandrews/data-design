@@ -98,11 +98,11 @@
 			</ul>
 			<h3>Relations</h3>
 			<ul>
-				<li>One <strong>Profile</strong> can write many <strong>Stories</strong> - <strong><em>(1 to
+				<li>One <strong>profile</strong> can write many <strong>stories</strong> - <strong><em>(1 to
 							n)</em></strong></li>
-				<li>Many <strong>Profiles</strong> can clap for many <strong>Stories</strong> - <strong><em>(m to
+				<li>Many <strong>profiles</strong> can <strong>clap</strong> for many <strong>stories</strong> - <strong><em>(m to
 							n)</em></strong></li>
-				<li>Many <strong>Profiles</strong> can highlight many <strong>Stories</strong> - <strong><em>(m to
+				<li>Many <strong>profiles</strong> can <strong>highlight</strong> many <strong>stories</strong> - <strong><em>(m to
 							n)</em></strong></li>
 			</ul>
 		</div>
