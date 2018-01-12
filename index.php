@@ -107,5 +107,6 @@
 			</ul>
 		</div>
 		<h2>ERD</h2>
+		<img src="Images/medium-erd-diagram.svg" alt="Medium ERD Diagram" width="700"/>
 	</body>
 </html>
