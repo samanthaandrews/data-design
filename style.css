@@ -1,45 +1,44 @@
-body {width: 85%;
-		margin: auto;
-
+body {
+	width: 85%;
+	margin: auto;
 }
 
-div {background-color: aliceblue;
+div {
+	background-color: aliceblue;
 	padding: 8px;
 	page-break-after: always;
-
 }
 
-img.persona {float: left;
-				padding-right: 15px;
-				padding-top: 15px;
-
+img.persona {
+	float: left;
+	padding-right: 15px;
+	padding-top: 15px;
 }
 
-div.persona {float: right
-
+div.persona {
+	float: right
 }
 
 h1 {
 	font-family: "Avenir Next"
-
 }
 
-h2 {font-family: "Avenir Next"
-
+h2 {
+	font-family: "Avenir Next"
 }
 
-h3 {font-family: "Avenir Next"
-
+h3 {
+	font-family: "Avenir Next"
 }
 
-h4 {font-family: "Avenir Next"
-
+h4 {
+	font-family: "Avenir Next"
 }
 
-p {font-family: "Avenir Next"
-
+p {
+	font-family: "Avenir Next"
 }
 
-ul {font-family: "Avenir Next"
-
+ul {
+	font-family: "Avenir Next"
 }
