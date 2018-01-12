@@ -17,7 +17,7 @@
 	<body>
 		<h1>Data Design - Medium</h1>
 		<div class="persona">
-			<img class="persona" src="Images/woman-gloria-persona.jpeg" alt="Photo of Gloria" width="400"/>
+			<img class="persona" src="images/woman-gloria-persona.jpeg" alt="Photo of Gloria" width="400"/>
 			<h2>Persona</h2>
 			<p>Gloria Fisher</p>
 			<p>Woman</p>
@@ -62,8 +62,8 @@
 
 		<div>
 			<h2>Conceptual Model</h2>
-			<img src="Images/Medium-Profile-Image.png" alt="Medium Profile" width="500"/>
-			<img src="Images/Medium-Story-Image.png" alt="Medium Story" width="500"/>
+			<img src="images/Medium-Profile-Image.png" alt="Medium Profile" width="500"/>
+			<img src="images/Medium-Story-Image.png" alt="Medium Story" width="500"/>
 		</div>
 
 		<div>
@@ -107,6 +107,6 @@
 			</ul>
 		</div>
 		<h2>ERD</h2>
-		<img src="Images/medium-erd-diagram.svg" alt="Medium ERD Diagram" width="700"/>
+		<img src="images/medium-erd-diagram.svg" alt="Medium ERD Diagram" width="700"/>
 	</body>
 </html>
