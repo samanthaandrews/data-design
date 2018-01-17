@@ -79,7 +79,18 @@ CREATE TABLE clap (
 
 SHOW TABLES;
 
-DESCRIBE clap;
 DESCRIBE profile;
+
+SELECT profileId
+FROM profile;
+
+SELECT profileEmail, profileHandle, storyContent
+FROM profile INNER JOIN story
+		ON profile.profileId = story.storyProfileId;
+
+ALTER TABLE story
+	MODIFY storyContent VARCHAR(65000) NOT NULL;
+
 DESCRIBE story;
+
 
