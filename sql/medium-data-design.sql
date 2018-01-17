@@ -46,3 +46,40 @@ CREATE TABLE clap (
 	-- finally, create a composite foreign key with the two foreign keys
 	PRIMARY KEY(clapId)
 );
+
+SHOW TABLES;
+
+DESCRIBE story;
+
+DESCRIBE clap;
+
+DROP TABLE clap;
+
+SHOW TABLES;
+
+ALTER TABLE story MODIFY storyContent VARCHAR(65535);
+
+ALTER TABLE story MODIFY storyContent VARCHAR(65534);
+
+-- create the clap entity (a try hard entity from an m-to-n for profile --> story)
+CREATE TABLE clap (
+	clapId BINARY (16) NOT NULL,
+	-- these are still foreign keys
+	clapProfileId BINARY(16) NOT NULL,
+	clapStoryId BINARY(16) NOT NULL,
+	-- index the foreign keys
+	INDEX(clapProfileId),
+	INDEX(clapStoryId),
+	-- create the foreign key relations
+	FOREIGN KEY(clapProfileId) REFERENCES profile(profileId),
+	FOREIGN KEY(clapStoryId) REFERENCES story (storyId),
+	-- finally, create a composite foreign key with the two foreign keys
+	PRIMARY KEY(clapId)
+);
+
+SHOW TABLES;
+
+DESCRIBE clap;
+DESCRIBE profile;
+DESCRIBE story;
+
