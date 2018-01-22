@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\DataDesign;
+namespace Edu\Cnm\Sandrews20\DataDesign;
 
 require_once("autoload.php");
 require_once(dirname(__DIR__) . "autoload.php");
@@ -67,7 +67,7 @@ class Profile {
 	 **/
 	public function setProfileId( $newProfileId) : void {
 		try {
-			$uuid = self::validateUuid($newTweetId);
+			$uuid = self::validateUuid($newProfileId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception)
 		{
 			$exceptionType = get_class($exception);
