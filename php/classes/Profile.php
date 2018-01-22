@@ -172,16 +172,72 @@ class Profile {
 			// store the email
 			$this->profileEmail = $newProfileEmail;
 	}
-	/** accessor method for profile hash
+
+	/**
+	 * accessor method for profileHash
 	 *
+	 * @return string value of hash
 	 */
-	/** mutator method for profile hash
+	public function getProfileHash(): string {
+		return $this->profileHash;
+	}
+	/**
+	 * mutator method for profile hash password
 	 *
+	 * @param string $newProfileHash
+	 * @throws \InvalidArgumentException if the hash is not secure
+	 * @throws \RangeException if the hash is not 128 characters
+	 * @throws \TypeError if profile hash is not a string
 	 */
-	/** accessor method for profile salt
+	public function setProfileHash(string $newProfileHash): void {
+		//enforce that the hash is properly formatted
+		$newProfileHash = trim($newProfileHash);
+		$newProfileHash = strtolower($newProfileHash);
+		if(empty($newProfileHash) === true) {
+			throw(new \InvalidArgumentException("profile password hash empty or insecure"));
+		}
+		//enforce that the hash is a string representation of a hexadecimal
+		if(!ctype_xdigit($newProfileHash)) {
+			throw(new \InvalidArgumentException("profile password hash is empty or insecure"));
+		}
+		//enforce that the hash is exactly 128 characters.
+		if(strlen($newProfileHash) !== 128) {
+			throw(new \RangeException("profile hash must be 128 characters"));
+		}
+		//store the hash
+		$this->profileHash = $newProfileHash;
+	}
+
+	/**
+	 *accessor method for profile salt
 	 *
+	 * @return string representation of the salt hexadecimal
 	 */
-	/** mutator method for profile salt
+	public function getProfileSalt(): string {
+		return $this->profileSalt;
+	}
+
+	/**
+	 * mutator method for profile salt
 	 *
+	 * @param string $newProfileSalt
+	 * @throws \InvalidArgumentException if the salt is not secure
+	 * @throws \RangeException if the salt is not 64 characters
+	 * @throws \TypeError if the profile salt is not a string
 	 */
+	public function setProfileSalt(string $newProfileSalt): void {
+		//enforce that the salt is properly formatted
+		$newProfileSalt = trim($newProfileSalt);
+		$newProfileSalt = strtolower($newProfileSalt);
+		//enforce that the salt is a string representation of a hexadecimal
+		if(!ctype_xdigit($newProfileSalt)) {
+			throw(new \InvalidArgumentException("profile password hash is empty or insecure"));
+		}
+		//enforce that the salt is exactly 64 characters.
+		if(strlen($newProfileSalt) !== 64) {
+			throw(new \RangeException("profile salt must be 128 characters"));
+		}
+		//store the hash
+		$this->profileSalt = $newProfileSalt;
+	}
 }
