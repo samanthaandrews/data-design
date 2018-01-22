@@ -181,6 +181,7 @@ class Profile {
 	public function getProfileHash(): string {
 		return $this->profileHash;
 	}
+
 	/**
 	 * mutator method for profile hash password
 	 *
