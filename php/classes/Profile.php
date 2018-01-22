@@ -15,45 +15,45 @@ use UnexpectedValueException;
  *@author Samantha Andrews <samantharaeandrews@gmail.com>
  *@author Dylan McDonald <dmcdonald21@cnm.edu>
  *
- */
+ **/
 
 class Profile {
 	use ValidateUuid;
 	/**
 	 * id for this Profile; this is the primary key
 	 * @var Uuid $profileId
-	 */
+	 **/
 	private $profileId;
 	/**
 	 * token to verify account is not malicious
 	 * @var string $profileActivationToken
-	 */
+	 **/
 	private $profileActivationToken;
 	/**
 	 * email associated with this Profile; this is a unique index
 	 * @var string $profileEmail
-	 */
+	 **/
 	private $profileEmail;
 	/**
 	 * unique handle associated with this profile
 	 * @var string $profileHandle
-	 */
+	 **/
 	private $profileHandle;
 	/**
 	 * hash for profile password
 	 * @var string $profileHash
-	 */
+	 **/
 	private $profileHash;
 	/**
 	 * salt stored for this profile password
 	 * @var string $profileSalt
-	 */
+	 **/
 	private $profileSalt;
 	/**
 	 * accessor method for profile id
 	 *
 	 * @return Uuid value of profileId
-	 */
+	 **/
 	public function getProfileId() : Uuid {
 		return ($this->profileId);
 	}
@@ -64,7 +64,7 @@ class Profile {
 	 * @param Uuid/string $newProfileId new value of profile id
 	 * @throws \RangeException if $newProfileId is not positive
 	 * @throws \TypeError if $newTweetId is not a uuid or string
-	 */
+	 **/
 	public function setProfileId( $newProfileId) : void {
 		try {
 			$uuid = self::validateUuid($newTweetId);
@@ -82,7 +82,7 @@ class Profile {
 	 * accessor method for account activation token
 	 *
 	 * @return string value of activation token
-	 */
+	 **/
 	public function getProfileActivationToken() : string {
 		return ($this->profileActivationToken);
 	}
@@ -94,7 +94,7 @@ class Profile {
 	 * @throws \InvalidArgumentException if the token is not a string or insecure
 	 * @throws \RangeException if the token is not 32 characters
 	 * @throws \TypeError if the token is not a string
-	 */
+	 **/
 	public function setProfileActivationToken (?string $newProfileActivationToken) : void {
 		$if($newProfileActivationToken === null){
 		$this->profileActivationToken = null;
@@ -114,7 +114,7 @@ class Profile {
 	/** accessor method for profile handle
 	 *
 	 * @return string value of profile handle
-	 */
+	 **/
 	public function getProfileHandle(): string {
 		return ($this->profileHandle);
 	}
@@ -126,7 +126,7 @@ class Profile {
 	 * @throws \InvalidArgumentException if $newProfileHandle is not a string or insecure
 	 * @throws \RangeException if $newProfileHandle is > 32 characters
 	 * @throws \typeError if $newProfileHandle is not a string
-	 */
+	 **/
 	public function setProfileHandle(string $newProfileHandle) : void {
 		// verify the handle is secure
 		$newProfileHandle = trim($newProfileHandle);
@@ -145,7 +145,7 @@ class Profile {
 	/** accessor method for profile email address
 	 *
 	 * @return string value of email address
-	 */
+	 **/
 	public function getProfileEmail() : string {
 		return $this->profileEmail;
 	}
@@ -156,7 +156,7 @@ class Profile {
 	 * @throws \InvalidArgumentException if $newProfileEmail is not valid email or insecure
 	 * @throws \RangeException if $newProfileEmail is > 128 characters
 	 * @throws \TypeError if $newProfileEmail is not a string
-	 */
+	 **/
 	public function setProfileEmail(string $newProfileEmail) : void {
 		//verify the email is secure
 		$newProfileEmail = trim($newProfileEmail);
@@ -176,7 +176,7 @@ class Profile {
 	 * accessor method for profileHash
 	 *
 	 * @return string value of hash
-	 */
+	 **/
 	public function getProfileHash(): string {
 		return $this->profileHash;
 	}
@@ -188,7 +188,7 @@ class Profile {
 	 * @throws \InvalidArgumentException if the hash is not secure
 	 * @throws \RangeException if the hash is not 128 characters
 	 * @throws \TypeError if profile hash is not a string
-	 */
+	 **/
 	public function setProfileHash(string $newProfileHash): void {
 		//enforce that the hash is properly formatted
 		$newProfileHash = trim($newProfileHash);
@@ -212,7 +212,7 @@ class Profile {
 	 *accessor method for profile salt
 	 *
 	 * @return string representation of the salt hexadecimal
-	 */
+	 **/
 	public function getProfileSalt(): string {
 		return $this->profileSalt;
 	}
@@ -224,7 +224,7 @@ class Profile {
 	 * @throws \InvalidArgumentException if the salt is not secure
 	 * @throws \RangeException if the salt is not 64 characters
 	 * @throws \TypeError if the profile salt is not a string
-	 */
+	 **/
 	public function setProfileSalt(string $newProfileSalt): void {
 		//enforce that the salt is properly formatted
 		$newProfileSalt = trim($newProfileSalt);
