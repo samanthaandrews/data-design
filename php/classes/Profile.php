@@ -19,7 +19,6 @@ use UnexpectedValueException;
 
 class Profile {
 	use ValidateUuid;
-
 	/**
 	 * id for this Profile; this is the primary key
 	 * @var Uuid $profileId
