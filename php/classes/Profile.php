@@ -58,6 +58,7 @@ class Profile {
 	public function getProfileId() : Uuid {
 		return ($this->profileId);
 	}
+
 	/**
 	 * mutator method for profile id
 	 *
@@ -86,6 +87,7 @@ class Profile {
 	public function getProfileActivationToken() : string {
 		return ($this->profileActivationToken);
 	}
+
 	/**
 	 * mutator method for account activation token
 	 *
@@ -109,9 +111,77 @@ class Profile {
 		}
 		$this->profileActivationToken = $newProfileActivationToken
 	}
+
 	/** accessor method for profile handle
 	 *
 	 * @return string value of profile handle
 	 */
+	public function getProfileHandle(): string {
+		return ($this->profileHandle);
+	}
+
+	/**
+	 * mutator method for profile handle
+	 *
+	 * @param string $newProfileHandle new value of handle
+	 * @throws \InvalidArgumentException if $newProfileHandle is not a string or insecure
+	 * @throws \RangeException if $newProfileHandle is > 32 characters
+	 * @throws \typeError if $newProfileHandle is not a string
+	 */
+	public function setProfileHandle(string $newProfileHandle) : void {
+		// verify the handle is secure
+		$newProfileHandle = trim($newProfileHandle);
+		$newProfileHandle = filter_var($newProfileHandle, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newProfileHandle) === true) {
+			throw(new \InvalidArgumentException("profile handle is empty or insecure"));
+		}
+		// verify the handle will fit in the database
+		if(strlen($newProfileAtHandle) > 32) {
+			throw(new \RangeException("profile handle is too large"));
+		}
+		// store the handle
+		$this->profileHandle = $newProfileHandle;
+	}
+
+	/** accessor method for profile email address
+	 *
+	 * @return string value of email address
+	 */
+	public function getProfileEmail() : string {
+		return $this->profileEmail;
+	}
+
+	/** mutator method for profile email address
+	 *
+	 * @param string $newProfileEmail new value of email
+	 * @throws \InvalidArgumentException if $newProfileEmail is not valid email or insecure
+	 * @throws \RangeException if $newProfileEmail is > 128 characters
+	 * @throws \TypeError if $newProfileEmail is not a string
+	 */
+	public function setProfileEmail(string $newProfileEmail) : void {
+		//verify the email is secure
+		$newProfileEmail = trim($newProfileEmail);
+		$newProfileEmail = filter_var($newProfileEmail, FILTER_VALIDATE_EMAIL);
+		if(empty($newProfileEmail) === true) {
+			throw(new \InvalidArgumentException("profile email is empty or insecure"));
+		}
+			// verify the email will fit in the database
+			if(strlen($newProfileEmail) > 128) {
+				throw(new \RangeException("profile email is too large"));
+			}
+			// store the email
+			$this->profileEmail = $newProfileEmail;
+	}
+	/** accessor method for profile hash
+	 *
+	 */
+	/** mutator method for profile hash
+	 *
+	 */
+	/** accessor method for profile salt
+	 *
+	 */
+	/** mutator method for profile salt
+	 *
+	 */
 }
-?>
