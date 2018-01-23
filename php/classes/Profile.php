@@ -1,11 +1,10 @@
 <?php
-namespace Edu\Cnm\Sandrews20\DataDesign;
+namespace Edu\Cnm\DataDesign;
 
 require_once("autoload.php");
-require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
+require_once(dirname(__DIR__, 2) . "../vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
-use UnexpectedValueException;
 
 /**
  * Cross Section of a Medium profile
@@ -96,11 +95,11 @@ class Profile {
 	 * @throws \TypeError if the token is not a string
 	 **/
 	public function setProfileActivationToken (?string $newProfileActivationToken) : void {
-		$if($newProfileActivationToken === null){
+		if($newProfileActivationToken === null){
 		$this->profileActivationToken = null;
 		return;
 	}
-	$newProfileActivationToken = strtolower(trim($newProfileActivationToken));
+		$newProfileActivationToken = strtolower(trim($newProfileActivationToken));
 		if(ctype_xdigit($newProfileActivationToken) === false) {
 			throw(new\RangeException("user activation is not valid"));
 		}

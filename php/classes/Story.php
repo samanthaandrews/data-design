@@ -80,8 +80,7 @@ class Story {
 	public function setStoryId( $newStoryId) : void {
 		try {
 			$uuid = self::validateUuid($newStoryId);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception);
-	{
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception); {
 	$exceptionType = get_class($exception);
 	throw(new $exceptionType($exception->getMessage(), 0, $exception));
 	}
@@ -89,6 +88,32 @@ class Story {
 	$this->storyId = $uuid;
 	}
 	/**
+	 * accessor method for story profile id
 	 *
+	 * @return Uuid value for story profile id
+	 **/
+	public function getStoryProfileId() : Uuid {
+		return($this->storyProfileId);
+	}
+
+	/**
+	 * mutator method for story profile id
+	 *
+	 * @param string
+	 * @throws
+	 * @throws
+	 **/
+	/**
+	 * accessor method for story content
+	 *
+	 **/
+	/** mutator method for story content
+	 *
+	 **/
+	/**
+	 * accessor method for story date time
+	 **/
+	/**
+	 * mutator method for story date time
 	 **/
 }
