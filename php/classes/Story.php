@@ -2,7 +2,7 @@
 namespace Edu\Cnm\Sandrews20\DataDesign;
 
 require_once("autoload.php");
-require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
+require_once(dirname(__DIR__, 2) . "../vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 
@@ -100,7 +100,7 @@ class Story {
 	 *
 	 * @param string | Uuid $newStoryProfileId new value of story profile id
 	 * @throws \RangeException if $newProfileId is not 16 characters
-	 * @throws \TypeError if $newStoryProfileId is not an UUID
+	 * @throws \TypeError if $newStoryProfileId is not a uuid
 	 **/
 	public function setStoryProfileId( $newStoryProfileId) : void {
 		try {
@@ -156,6 +156,7 @@ class Story {
 	 * @param \DateTime|string|null $newStoryDateTime story date as a DateTime object or string (or null to load the current date time)
 	 * @throws \InvalidArgumentException if $newStoryDateTime is not a valid object or string
 	 * @throws \RangeException if $newStoryDateTime is a date time that does not exist
+	 * @throws \TypeError if $newStoryDateTime is not a \DateTime
 	 **/
 	public function setStoryDateTime($newStoryDateTime = null) : void {
 		// base case: if the date is null, use the current date and time
@@ -165,8 +166,8 @@ class Story {
 		}
 		// store the like date using the ValidateDate trait
 		try {
-			$newStoryDateTime = self::validateDateTime($newStoryDateTime);
-		} catch(\InvalidArgumentException | \RangeException $exception) {
+			$newStoryDateTime = self::validateDate($newStoryDateTime);
+		} catch(\InvalidArgumentException | \RangeException | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
