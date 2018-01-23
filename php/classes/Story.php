@@ -42,22 +42,27 @@ class Story {
 
 	/**constructor for this Story
 	 *
-	 * @param
-	 * @param
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
+	 * @param Uuid $newStoryId new story id
+	 * @param Uuid $newStoryProfileId new story profile id
+	 * @param string $newStoryContent new story content
+	 * @param string $newStoryDateTime new story date time
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \Exception if some other exception occurs
+	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	public function __construct($newStoryId, $newStoryProfileId, string $newStoryContent, $newStoryDateTime = null) {
+	public function __construct(uuid $newStoryId, uuid $newStoryProfileId, string $newStoryContent, $newStoryDateTime = null) {
 		try {
 			$this->setStoryId($newStoryId);
 			$this->setStoryProfileId($newStoryProfileId);
 			$this->setStoryContent($newStoryContent);
 			$this->setStoryDateTime($newStoryDateTime);
+		}
+			//determine what exception type was thrown
+		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 	}
 
@@ -76,7 +81,7 @@ class Story {
 	 * @throws \RangeException if $newStoryId is not 16 characters
 	 * @throws \TypeError if $newStoryId is not a uuid
 	 **/
-	public function setTweetId( $newStoryId) : void {
+	public function setStoryId( $newStoryId) : void {
 		try {
 			$uuid = self::validateUuid($newStoryId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
