@@ -2,7 +2,7 @@
 namespace Edu\Cnm\Sandrews20\DataDesign;
 
 require_once("autoload.php");
-require_once(dirname(__DIR__, 2) . "../vendor/autoload.php");
+require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 
@@ -48,10 +48,44 @@ class Profile {
 	 * @var string $profileSalt
 	 **/
 	private $profileSalt;
+
+
+	/** constructor for this Profile
+	 *
+	 * @param Uuid $newProfileId new profile id
+	 * @param string $newProfileActivationToken new profile activation token
+	 * @param string $newProfileEmail new profile email
+	 * @param string $newProfileHandle new profile handle
+	 * @param string $newProfileHash new profile hash
+	 * @param string $newProfileSalt new profile salt
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \Exception if some other exception occurs
+	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
+	 **/
+	public function __construct($newProfileId, ?string $newProfileActivationToken, string $newProfileEmail, string $newProfileHandle, string $newProfileHash, string $newProfileSalt) {
+		try {
+			$this->setProfileId($newProfileId);
+			$this->setProfileActivationToken($newProfileActivationToken);
+			$this->setProfileEmail($newProfileEmail);
+			$this->setProfileHandle($newProfileHandle);
+			$this->setProfileHash($newProfileHash);
+			$this->setProfileSalt($newProfileSalt);
+
+		}
+			//determine what exception type was thrown
+		catch(\InvalidArgumentException | \RangeException | \TypeError | \Exception $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+	}
+
+
 	/**
 	 * accessor method for profile id
 	 *
-	 * @return Uuid value of profileId
+	 * @return Uuid value of profile id
 	 **/
 	public function getProfileId() : Uuid {
 		return ($this->profileId);
@@ -62,7 +96,7 @@ class Profile {
 	 *
 	 * @param Uuid/string $newProfileId new value of profile id
 	 * @throws \RangeException if $newProfileId is not positive
-	 * @throws \TypeError if $newTweetId is not a uuid or string
+	 * @throws \TypeError if $newProfileId is not a uuid or string
 	 **/
 	public function setProfileId( $newProfileId) : void {
 		try {
