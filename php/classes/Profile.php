@@ -75,7 +75,7 @@ class Profile {
 
 		}
 			//determine what exception type was thrown
-		catch(\InvalidArgumentException | \RangeException | \TypeError | \Exception $exception) {
+		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
@@ -272,5 +272,22 @@ class Profile {
 		}
 		//store the hash
 		$this->profileSalt = $newProfileSalt;
+	}
+
+		/**
+		 * formats the state variables for JSON serialization
+		 *
+		 * @return array resulting state variables to serialize
+		 **/
+		public function jsonSerialize() {
+			$fields = get_object_vars($this);
+			$fields["profileId"] = $this->profileId->toString();
+			$fields["profileEmail"] = $this->profileEmail->toString();
+			$fields["profileHandle"] = $this->profileHandle->toString();
+			unset($fields["profileActivationToken"]);
+			unset($fields["profileHash"]);
+			unset($fields["profileSalt"]);
+			return ($fields);
+		}
 	}
 }
