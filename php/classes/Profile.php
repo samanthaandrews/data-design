@@ -16,7 +16,7 @@ use Ramsey\Uuid\Uuid;
  *
  **/
 
-class Profile {
+class Profile implements \JsonSerializable {
 	use ValidateUuid;
 	/**
 	 * id for this Profile; this is the primary key
@@ -64,7 +64,7 @@ class Profile {
 	 * @throws \Exception if some other exception occurs
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	public function __construct($newProfileId, ?string $newProfileActivationToken, string $newProfileEmail, string $newProfileHandle, string $newProfileHash, string $newProfileSalt) {
+	public function __construct($newProfileId, ?string $newProfileActivationToken, string $newProfileEmail, ?string $newProfileHandle, string $newProfileHash, string $newProfileSalt) {
 		try {
 			$this->setProfileId($newProfileId);
 			$this->setProfileActivationToken($newProfileActivationToken);
@@ -106,10 +106,9 @@ class Profile {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-
-	}
 	// convert and store the profile id
-	$this->profileId = $uuid;
+	$this->profileId = $newProfileId;
+	}
 
 	/**
 	 * accessor method for account activation token
@@ -141,7 +140,7 @@ class Profile {
 		if(strlen($newProfileActivationToken) !== 32) {
 			throw(new\RangeException("user activation token has to be 32 characters"));
 		}
-		$this->profileActivationToken = $newProfileActivationToken
+		$this->profileActivationToken = $newProfileActivationToken;
 	}
 
 	/** accessor method for profile handle
@@ -168,7 +167,7 @@ class Profile {
 			throw(new \InvalidArgumentException("profile handle is empty or insecure"));
 		}
 		// verify the handle will fit in the database
-		if(strlen($newProfileAtHandle) > 32) {
+		if(strlen($newProfileHandle) > 32) {
 			throw(new \RangeException("profile handle is too large"));
 		}
 		// store the handle

@@ -16,7 +16,7 @@ use Ramsey\Uuid\Uuid;
  *
  **/
 
-class Story {
+class Story implements \JsonSerializable {
 	use ValidateUuid;
 	use ValidateDate;
 	/**
@@ -177,5 +177,20 @@ class Story {
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 		$this->storyDateTime = $newStoryDateTime;
+	}
+
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		$fields["storyId"] = $this->storyId;
+		$fields["storyProfileId"] = $this->storyProfileId;
+		$fields["storyContent"] = $this->storyContent;
+		//format the date so that the front end can consume it
+		$fields["storyDateTime"] = round(floatval($this->storyDateTime->format("U.u")) * 1000);
+		return($fields);
 	}
 }
