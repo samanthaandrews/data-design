@@ -180,6 +180,193 @@ class Story implements \JsonSerializable {
 	}
 
 	/**
+	 * inserts this Story into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo) : void {
+		// create query template
+		$query = "INSERT INTO story(storyId, storyProfileId, storyContent, storyDateTime) VALUES(:storyId, :storyProfileId, :storyContent, :storyDateTime)";
+		$statement = $pdo->prepare($query);
+		// bind the member variables to the place holders in the template
+		$formattedDate = $this->storyDateTime->format("Y-m-d H:i:s.u");
+		$parameters = ["tweetId" => $this->storyId->getBytes(), "storyProfileId" => $this->storyProfileId->getBytes(), "tweetContent" => $this->storyContent, "storyDateTime" => $formattedDate];
+		$statement->execute($parameters);
+	}
+	/**
+	 * deletes this Story from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo) : void {
+		// create query template
+		$query = "DELETE FROM story WHERE storyId = :storyId";
+		$statement = $pdo->prepare($query);
+		// bind the member variables to the place holder in the template
+		$parameters = ["storyId" => $this->storyId->getBytes()];
+		$statement->execute($parameters);
+	}
+	/**
+	 * updates this Story in mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo) : void {
+		// create query template
+		$query = "UPDATE story SET storyProfileId = :storyProfileId, storyContent = :storyContent, storyDateTime = :storyDateTime WHERE storyId = :storyId";
+		$statement = $pdo->prepare($query);
+		$formattedDate = $this->storyDateTime->format("Y-m-d H:i:s.u");
+		$parameters = ["storyId" => $this->storyId->getBytes(),"storyProfileId" => $this->storyProfileId->getBytes(), "storyContent" => $this->storyContent, "storyDateTime" => $formattedDate];
+		$statement->execute($parameters);
+	}
+	/**
+	 * gets the story by storyId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $storyId tweet id to search for
+	 * @return Story|null Story found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when a variable are not the correct data type
+	 **/
+	public static function getStoryByStoryId(\PDO $pdo, string $storyId) : ?Story {
+		// sanitize the storyId before searching
+		try {
+			$storyId = self::validateUuid($storyId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT storyId, storyProfileId, storyContent, storyDateTime FROM story WHERE storyId = :storyId";
+		$statement = $pdo->prepare($query);
+		// bind the tweet id to the place holder in the template
+		$parameters = ["storyId" => $storyId->getBytes()];
+		$statement->execute($parameters);
+		// grab the story from mySQL
+		try {
+			$story = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$story = new Story($row["storyId"], $row["storyProfileId"], $row["storyContent"], $row["storyDateTime"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($story);
+	}
+	/**
+	 * gets the Story by profile id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $tweetProfileId profile id to search by
+	 * @return \SplFixedArray SplFixedArray of Tweets found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getStoryByStoryProfileId(\PDO $pdo, string  $storyProfileId) : \SPLFixedArray {
+		try {
+			$storyProfileId = self::validateUuid($storyProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT storyId, storyProfileId, storyContent, storyDateTime FROM story WHERE storyProfileId = :storyProfileId";
+		$statement = $pdo->prepare($query);
+		// bind the story profile id to the place holder in the template
+		$parameters = ["storyProfileId" => $storyProfileId->getBytes()];
+		$statement->execute($parameters);
+		// build an array of stories
+		$stories = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$stories = new Story($row["storyId"], $row["storyProfileId"], $row["storyContent"], $row["storyDateTime"]);
+				$stories[$stories->key()] = $stories;
+				$stories->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($stories);
+	}
+	/**
+	 * gets the Story by content
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $storyContent story content to search for
+	 * @return \SplFixedArray SplFixedArray of Tweets found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getStoryByStoryContent(\PDO $pdo, string $storyContent) : \SPLFixedArray {
+		// sanitize the description before searching
+		$storyContent = trim($storyContent);
+		$storyContent = filter_var($storyContent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($storyContent) === true) {
+			throw(new \PDOException("story content is invalid"));
+		}
+		// escape any mySQL wild cards
+		$storyContent = str_replace("_", "\\_", str_replace("%", "\\%", $storyContent));
+		// create query template
+		$query = "SELECT storyId, storyProfileId, storyContent, storyDateTime FROM story WHERE storyContent LIKE :storyContent";
+		$statement = $pdo->prepare($query);
+		// bind the story content to the place holder in the template
+		$storyContent = "%$storyContent%";
+		$parameters = ["storyContent" => $storyContent];
+		$statement->execute($parameters);
+		// build an array of tweets
+		$stories = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$story = new Story($row["storyId"], $row["storyProfileId"], $row["storyContent"], $row["storyDateTime"]);
+				$stories[$stories->key()] = $story;
+				$stories->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($stories);
+	}
+	/**
+	 * gets all Stories
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of Tweets found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getAllStories(\PDO $pdo) : \SPLFixedArray {
+		// create query template
+		$query = "SELECT storyId, storyProfileId, storyContent, storyDateTime FROM story";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+		// build an array of stories
+		$stories = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$story = new Story($row["storyId"], $row["storyProfileId"], $row["storyContent"], $row["storyDateTime"]);
+				$stories[$stories->key()] = $story;
+				$stories->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($stories);
+	}
+
+	/**
 	 * formats the state variables for JSON serialization
 	 *
 	 * @return array resulting state variables to serialize
