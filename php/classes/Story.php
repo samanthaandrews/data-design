@@ -226,7 +226,7 @@ class Story implements \JsonSerializable {
 		$statement->execute($parameters);
 	}
 	/**
-	 * gets the story by storyId
+	 * gets the Story by storyId
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param string $storyId tweet id to search for
