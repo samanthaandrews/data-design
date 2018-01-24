@@ -192,7 +192,7 @@ class Story implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 		// bind the member variables to the place holders in the template
 		$formattedDate = $this->storyDateTime->format("Y-m-d H:i:s.u");
-		$parameters = ["tweetId" => $this->storyId->getBytes(), "storyProfileId" => $this->storyProfileId->getBytes(), "tweetContent" => $this->storyContent, "storyDateTime" => $formattedDate];
+		$parameters = ["storyId" => $this->storyId->getBytes(), "storyProfileId" => $this->storyProfileId->getBytes(), "storyContent" => $this->storyContent, "storyDateTime" => $formattedDate];
 		$statement->execute($parameters);
 	}
 	/**
@@ -229,7 +229,7 @@ class Story implements \JsonSerializable {
 	 * gets the Story by storyId
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param string $storyId tweet id to search for
+	 * @param string|Uuid $storyId tweet id to search for
 	 * @return Story|null Story found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable are not the correct data type
@@ -244,7 +244,7 @@ class Story implements \JsonSerializable {
 		// create query template
 		$query = "SELECT storyId, storyProfileId, storyContent, storyDateTime FROM story WHERE storyId = :storyId";
 		$statement = $pdo->prepare($query);
-		// bind the tweet id to the place holder in the template
+		// bind the story id to the place holder in the template
 		$parameters = ["storyId" => $storyId->getBytes()];
 		$statement->execute($parameters);
 		// grab the story from mySQL
@@ -266,7 +266,7 @@ class Story implements \JsonSerializable {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param string $tweetProfileId profile id to search by
-	 * @return \SplFixedArray SplFixedArray of Tweets found
+	 * @return \SplFixedArray SplFixedArray of Stories found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
